@@ -1,11 +1,13 @@
-import TopDeck from "../components/TopDeck";
 import io from "socket.io-client";
-import BottomDeck from "../components/BottomDeck";
 import queryString from "query-string";
-import { Button, Container, ButtonGroup } from "@material-ui/core";
-import { Typography } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
+
+import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { Button, Container, ButtonGroup } from "@material-ui/core";
+
+import TopDeck from "../components/TopDeck";
+import BottomDeck from "../components/BottomDeck";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -39,9 +41,7 @@ export default function PokerRoom({ location }) {
 
   useEffect(() => {
     socket = io(ENDPOINT);
-    
     socket.emit("join", { roomId, username });
-
     return () => {
       socket.emit("disconnect");
       socket.off();
@@ -49,48 +49,33 @@ export default function PokerRoom({ location }) {
   }, [ENDPOINT, location.search, roomId, username]);
 
   useEffect(() => {
-    const updateUser = ({ id, roomId, username }) => {
+    const updateUser = ({ id, roomId, username }) =>
       setUser({ id, roomId, username });
-    };
-
     socket.on("you have joined the room", updateUser);
-
     return () => {
       socket.off("you have joined the room", updateUser);
     };
   }, [user]);
 
   useEffect(() => {
-    const updateUsers = ({ users }) => {
-      setUsers(users);
-    };
-
+    const updateUsers = ({ users }) => setUsers(users);
     socket.on("a new user has joined the room", updateUsers);
-
     return () => {
       socket.off("a new user has joined the room", updateUsers);
     };
   }, [users]);
 
   useEffect(() => {
-    const updateVotes = ({ votes }) => {
-      setVotes(votes);
-    };
-
+    const updateVotes = ({ votes }) => setVotes(votes);
     socket.on("a new vote has been cast in the room", updateVotes);
-
     return () => {
       socket.off("a new vote has been cast in the room", updateVotes);
     };
   }, [votes]);
 
   useEffect(() => {
-    const revealVotes = ({ showVotes }) => {
-      setShowVotes(showVotes);
-    };
-
+    const revealVotes = ({ showVotes }) => setShowVotes(showVotes);
     socket.on("a user has revealed the votes", revealVotes);
-
     return () => {
       socket.off("a user has revealed the votes", revealVotes);
     };
@@ -98,12 +83,11 @@ export default function PokerRoom({ location }) {
 
   useEffect(() => {
     const resetVotes = ({ votes }) => {
+      setShowVotes(false);
       setVotes(votes);
       setVote("");
     };
-
     socket.on("a user has reset the votes", resetVotes);
-
     return () => {
       socket.off("a user has reset the votes", resetVotes);
     };
@@ -115,15 +99,10 @@ export default function PokerRoom({ location }) {
       setVotes(votes);
     };
     socket.on("a user has left the room", leaveRoom);
-
     return () => {
       socket.off("a user has left the room", leaveRoom);
     };
   }, [users]);
-
-  useEffect(() => {
-    users.length === votes.length ? setShowVotes(true) : setShowVotes(false);
-  }, [users, votes]);
 
   const sendVote = (vote) => {
     setVote(vote);
@@ -138,6 +117,7 @@ export default function PokerRoom({ location }) {
   const resetVotes = () => {
     setVote("");
     setVotes([]);
+    setShowVotes(false);
     socket.emit("reset");
   };
 
