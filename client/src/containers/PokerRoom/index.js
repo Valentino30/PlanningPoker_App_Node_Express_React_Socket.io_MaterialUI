@@ -3,32 +3,17 @@ import queryString from "query-string";
 import React, { useState, useEffect } from "react";
 
 import { Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
 import { Button, Container, ButtonGroup } from "@material-ui/core";
 
-import TopDeck from "../components/TopDeck";
-import BottomDeck from "../components/BottomDeck";
+import { usePokerRoomStyles } from "./styles";
 
-const useStyles = makeStyles((theme) => ({
-  title: {
-    margin: "30px",
-    color: "#f1f1f1",
-  },
-  subtitle: {
-    margin: "40px",
-    color: "#f1f1f1",
-  },
-  button: {
-    color: "#f1f1f1",
-    backgroundColor: "#028193",
-    marginTop: theme.spacing(3),
-  },
-}));
+import TopDeck from "../../components/TopDeck";
+import BottomDeck from "../../components/ButtomDeck";
 
 let socket;
 
 export default function PokerRoom({ location }) {
-  const classes = useStyles();
+  const classes = usePokerRoomStyles();
 
   const [user, setUser] = useState("");
   const [vote, setVote] = useState("");
