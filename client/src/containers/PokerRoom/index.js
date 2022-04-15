@@ -7,8 +7,8 @@ import { Button, Container, ButtonGroup } from "@material-ui/core";
 
 import { usePokerRoomStyles } from "./styles";
 
-import TopDeck from "../../components/TopDeck";
-import BottomDeck from "../../components/ButtomDeck";
+import UpperDeck from "../../components/UpperDeck";
+import LowerDeck from "../../components/LowerDeck";
 
 let socket;
 
@@ -119,7 +119,7 @@ export default function PokerRoom({ location }) {
         </Typography>
       </div>
       <div style={{ height: 175 }}>
-        <TopDeck users={users} votes={votes} showVotes={showVotes} />
+        <UpperDeck users={users} votes={votes} showVotes={showVotes} />
       </div>
       <div>
         <ButtonGroup variant="text" color="primary">
@@ -137,7 +137,7 @@ export default function PokerRoom({ location }) {
         </Typography>
       </div>
       <div>
-        <BottomDeck vote={vote} sendVote={sendVote} showVotes={showVotes} />
+        <LowerDeck vote={vote} sendVote={sendVote} showVotes={showVotes} />
       </div>
     </Container>
   );
