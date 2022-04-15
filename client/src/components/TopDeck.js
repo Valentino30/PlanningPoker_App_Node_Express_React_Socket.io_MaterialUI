@@ -32,7 +32,7 @@ export default function TopDeck({ users, votes, showVotes }) {
 
   return (
     <Grid item xs={12}>
-      <Grid container justify="center" spacing={2}>
+      <Grid container justifyContent="center" spacing={2}>
         {users.map((user) => (
           <Grid key={user.id} item>
             {votes.some((vote) => vote.username === user.username) ? (

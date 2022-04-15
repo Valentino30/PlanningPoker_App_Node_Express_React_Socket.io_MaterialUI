@@ -36,7 +36,7 @@ export default function BottomDeck({ vote, sendVote, showVotes }) {
 
   return (
     <Grid item xs={12}>
-      <Grid container justify="center" spacing={2}>
+      <Grid container justifyContent="center" spacing={2}>
         {cards.map((card) => (
           <Grid key={card} item>
             <CardActionArea color="yellow">
