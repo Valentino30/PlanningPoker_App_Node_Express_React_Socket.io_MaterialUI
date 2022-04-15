@@ -28,21 +28,11 @@ let socket;
 export default function PokerRoom({ location }) {
   const classes = useStyles();
 
-  const [user, setUser] = useState(
-    () => JSON.parse(localStorage.getItem("user")) || ""
-  );
-  const [vote, setVote] = useState(
-    () => JSON.parse(localStorage.getItem("vote")) || ""
-  );
-  const [votes, setVotes] = useState(
-    () => JSON.parse(localStorage.getItem("votes")) || []
-  );
-  const [users, setUsers] = useState(
-    () => JSON.parse(localStorage.getItem("users")) || []
-  );
-  const [showVotes, setShowVotes] = useState(
-    () => JSON.parse(localStorage.getItem("showVotes")) || false
-  );
+  const [user, setUser] = useState("");
+  const [vote, setVote] = useState("");
+  const [votes, setVotes] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [showVotes, setShowVotes] = useState(false);
 
   const ENDPOINT = "localhost:4000";
   const { roomId, username } = queryString.parse(location.search);
@@ -134,26 +124,6 @@ export default function PokerRoom({ location }) {
   useEffect(() => {
     users.length === votes.length ? setShowVotes(true) : setShowVotes(false);
   }, [users, votes]);
-
-  useEffect(() => {
-    localStorage.setItem("user", JSON.stringify(user));
-  }, [user]);
-
-  useEffect(() => {
-    localStorage.setItem("users", JSON.stringify(users));
-  }, [users]);
-
-  useEffect(() => {
-    localStorage.setItem("vote", JSON.stringify(vote));
-  }, [vote]);
-
-  useEffect(() => {
-    localStorage.setItem("votes", JSON.stringify(votes));
-  }, [votes]);
-
-  useEffect(() => {
-    localStorage.setItem("showVotes", JSON.stringify(showVotes));
-  }, [showVotes]);
 
   const sendVote = (vote) => {
     setVote(vote);
